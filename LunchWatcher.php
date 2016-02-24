@@ -1,6 +1,7 @@
 <?php
 if($_POST['token'] == "kcEEqgzLBnJ4w2ZqMrWLnLRT" or $_POST['token'] == "c1OlXbdq0sWVgsA1nBGpChph")
 {
+	require "config.php";
 	$answer = new stdClass();
 	$arguments = explode(" ", $_POST['text']);
 	if(count($arguments) > 1)
