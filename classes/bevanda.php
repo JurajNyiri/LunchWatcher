@@ -9,8 +9,8 @@ class Bevanda {
 
     public function getFood()
     {
-    	$currentDay = date( "w", time());
-    	if((time() - filemtime($this->saveLocation) > 86400) or empty(file_get_contents($this->saveLocation)))
+    	$currentDay = date("w", time());
+    	if($currentDay !== date("w",filemtime($this->saveLocation)))
     	{ 
     		// download only once a day maximum
     		$data = new stdClass();
