@@ -1,5 +1,5 @@
 <?php
-$answer->text = "*Launcher Watcher Bot ".$config['version']."*".PHP_EOL.PHP_EOL;
+$answer->text = "*Lunch Watcher Bot ".$config['version']."*".PHP_EOL.PHP_EOL;
 $answer->text .= "*Usage:*".PHP_EOL;
 $answer->text .= "!lunch *help* - shows usage".PHP_EOL.PHP_EOL;
 

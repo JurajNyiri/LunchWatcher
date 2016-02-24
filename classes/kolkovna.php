@@ -10,7 +10,7 @@ class Kolkovna {
     public function getFood()
     {
     	$currentDay = date("w", time());
-    	if(!file_exists($this->saveLocation) or ($currentDay !== date("w",filemtime($this->saveLocation))))
+    	if(!file_exists($this->saveLocation) or ($currentDay !== date("w",filemtime($this->saveLocation))) or (time()-filemtime($this->saveLocation) > 86400))
     	{ 
     		// download only once a day maximum
     		$data = new stdClass();
