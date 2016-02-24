@@ -1,7 +1,7 @@
 <?php
 class Bevanda { 
 	private $link = "http://tower115.bevanda.sk/";
-	private $saveLocation = "data/data";
+	private $saveLocation = "data/bevanda";
     public function __construct()
     {
     }
@@ -10,7 +10,7 @@ class Bevanda {
     public function getFood()
     {
     	$currentDay = date("w", time());
-    	if($currentDay !== date("w",filemtime($this->saveLocation)))
+    	if(!file_exists($this->saveLocation) or ($currentDay !== date("w",filemtime($this->saveLocation))))
     	{ 
     		// download only once a day maximum
     		$data = new stdClass();

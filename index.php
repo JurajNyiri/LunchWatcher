@@ -1,8 +1,8 @@
 <?php
-require "classes/bevanda.php";
-$bevanda = new Bevanda();
+require "classes/kolkovna.php";
+$kolkovna = new Kolkovna();
 
-$weekMeals = $bevanda->getFood();
+$weekMeals = $kolkovna->getFood();
 $currentDay = date( "w", time());
 if(isset($_GET['api']))
 {
@@ -15,7 +15,7 @@ else
 	<html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Bevanda - <?php echo $weekMeals->day[$currentDay]; ?></title>
+	<title>LunchWatcher - <?php echo $weekMeals->day[$currentDay]; ?></title>
 	</head>
 
 	<body>
