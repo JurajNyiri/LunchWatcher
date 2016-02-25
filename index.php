@@ -1,8 +1,9 @@
 <?php
-require "classes/kolkovna.php";
-$kolkovna = new Kolkovna();
+require "classes/zomato.php";
+$zomato = new Zomato(true,"","https://www.zomato.com/sk/bratislava/beabout-star%C3%A9-mesto-bratislava-i/menu#daily");
 
-$weekMeals = $kolkovna->getFood();
+$weekMeals = $zomato->getFood();
+die("index die");
 $currentDay = date( "w", time());
 if(isset($_GET['api']))
 {

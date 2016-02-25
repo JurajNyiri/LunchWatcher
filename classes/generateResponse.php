@@ -26,6 +26,10 @@ class generateResponse {
 			{
 				require $this->path."arguments/about.php";
 			}
+			elseif(strtoupper($this->arguments[1]) == "BEABOUT")
+			{
+				require $this->path."arguments/beabout.php";
+			}
 			else
 			{
 				require $this->path."arguments/usage.php";
