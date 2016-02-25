@@ -2,17 +2,20 @@
 class Kolkovna { 
 	private $link = "http://www.kolkovna.cz/sk/kolkovna-eurovea-19/denne-menu";
 	private $saveLocation = "data/kolkovna";
-    public function __construct()
+    private $online = false;
+    private $path = "";
+    public function __construct($online = false,$path = "")
     {
+    	$this->online = $online;
+    	$this->path = $path;
     }
 
 
     public function getFood()
     {
     	$currentDay = date("w", time());
-    	if(!file_exists($this->saveLocation) or ($currentDay !== date("w",filemtime($this->saveLocation))) or (time()-filemtime($this->saveLocation) > 86400))
-    	{ 
-    		// download only once a day maximum
+    	if($this->online)
+    	{
     		$data = new stdClass();
 	    	$data->day = array();
 	    	$data->dayFood = array();
@@ -108,12 +111,12 @@ class Kolkovna {
 	            	$j++;
 	            }
 	            $data->dayFood = $items;
-	            file_put_contents($this->saveLocation, json_encode($data));
+	            file_put_contents($this->path.$this->saveLocation, json_encode($data));
 	    	}
     	}
     	else
     	{
-    		$data = json_decode(file_get_contents($this->saveLocation));
+    		$data = json_decode(file_get_contents($this->path.$this->saveLocation));
     	}
     	return $data;
     }
