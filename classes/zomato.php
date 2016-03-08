@@ -32,6 +32,12 @@ class Zomato {
 				$finalItemData = $this->processAnjouItem($str);
 		        break;
 			}
+			else if(strtoupper($name) == "VIKARO")
+			{
+				$foundTheRestaurant = true;
+				$finalItemData = $this->processVikaroItem($str);
+		        break;
+			}
 		}
 		if(!$foundTheRestaurant)
 		{
@@ -44,6 +50,12 @@ class Zomato {
     }
 
     private function processAnjouItem($str)
+    {
+    	//todo
+    	return $str;
+    }
+
+    private function processVikaroItem($str)
     {
     	//todo
     	return $str;
