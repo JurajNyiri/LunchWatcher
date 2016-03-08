@@ -15,6 +15,23 @@ class Zomato {
     private function processZomatoItem($str)
     {
     	$finalItemData = new stdClass();
+    	switch ($this->link) {
+		    case "https://www.zomato.com/sk/bratislava/beabout-star%C3%A9-mesto-bratislava-i/menu":
+		        $finalItemData = $this->processBeAboutItem($str);
+		        break;
+		    default:
+		        $finalItemData->name = $str;
+		        $finalItemData->price = "";
+		        $finalItemData->size = "";
+		        $finalItemData->alergens = "";
+		        break;
+		}
+		return $finalItemData;
+    }
+
+    private function processBeAboutItem($str)
+    {
+    	$finalItemData = new stdClass();
     	$itemData = explode(" ", trim(preg_replace('/[ ]{2,}|[\t]/', ' ', $str)));
 
     	//remove weird chars from zomato
@@ -66,7 +83,7 @@ class Zomato {
 	    return $finalItemData;
     }
 
-    public function getFood($tries = 0)
+    public function getFood($tries = 0,$modifiedLink = false)
     {
     	$currentDay = date("w", time());
     	if($this->online)
@@ -74,7 +91,14 @@ class Zomato {
     		$data = new stdClass();
 	    	$data->day = array();
 	    	$data->dayFood = array();
-	    	$pageData = @file_get_contents($this->link);
+	    	if($modifiedLink)
+	    	{
+				$pageData = file_get_contents($modifiedLink);
+	    	}
+	    	else
+	    	{
+	    		$pageData = file_get_contents($this->link);
+	    	}
 	    	if($pageData !== false)
 	    	{
 	    		
@@ -104,8 +128,22 @@ class Zomato {
 	            $items = array();
 	            $items[0] = array();
 	            foreach ($entries as $node) {
-	            	$finalItemData = $this->processZomatoItem($node->nodeValue);
+			        $finalItemData = $this->processZomatoItem($node->nodeValue);
 					array_push($items[0],$finalItemData);
+	            }
+
+
+	            //menu items not found, we need to go deeper
+	            if(empty($items[0]))
+	            {
+	            	$query = "//div[@id='menu-preview']/div[@class='tmi-groups']/div[@class='tmi-group '][1]//div[@class='tmi tmi-daily bold ']";
+		            $entries = $xpath->query($query);
+		            $items = array();
+		            $items[0] = array();
+		            foreach ($entries as $node) {
+		            	$finalItemData = $this->processZomatoItem($node->nodeValue);
+						array_push($items[0],$finalItemData);
+		            }
 	            }
 
 
@@ -124,7 +162,7 @@ class Zomato {
 	    		if($tries < 10)
 	    		{
 	    			sleep(5);
-	    			$this->getFood();
+	    			$this->getFood($tries,$modifiedLink);
 	    		}
 	    	}
     	}

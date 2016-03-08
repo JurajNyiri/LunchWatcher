@@ -1,8 +1,9 @@
 <?php
 require "classes/zomato.php";
-$zomato = new Zomato(true,"","https://www.zomato.com/sk/bratislava/beabout-star%C3%A9-mesto-bratislava-i/menu#daily");
+$zomato = new Zomato(true,"","https://www.zomato.com/sk/bratislava/pulitzer-u-zlat%C3%A9ho-jele%C5%88a-star%C3%A9-mesto-bratislava-i/menu");
 
 $weekMeals = $zomato->getFood();
+print_r($weekMeals);
 die("index die");
 $currentDay = date( "w", time());
 if(isset($_GET['api']))

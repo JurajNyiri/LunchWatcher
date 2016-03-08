@@ -1,6 +1,6 @@
 <?php
 	require "classes/zomato.php";
-	$zomato = new Zomato(false,"","https://www.zomato.com/sk/bratislava/beabout-star%C3%A9-mesto-bratislava-i/menu#daily");
+	$zomato = new Zomato(false,"","https://www.zomato.com/sk/bratislava/beabout-star%C3%A9-mesto-bratislava-i/menu");
 
 	$answer = new stdClass();
 	$answer->text = "";
