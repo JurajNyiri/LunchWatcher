@@ -58,10 +58,13 @@ class generateResponse {
 									$answer->text .= $meal->size . " - " . $meal->name . " - " . $meal->price . PHP_EOL;
 								}
 
-								$answer->text .= PHP_EOL.PHP_EOL . "*​Daily meals*" . PHP_EOL;
-								foreach($weekMeals->dayFood[1] as $meal)
+								if(isset($weekMeals->dayFood[1]) && !empty($weekMeals->dayFood[1]))
 								{
-									$answer->text .= $meal->size . " - " . $meal->name . " - " . $meal->price . PHP_EOL;
+									$answer->text .= PHP_EOL.PHP_EOL . "*​Daily meals*" . PHP_EOL;
+									foreach($weekMeals->dayFood[1] as $meal)
+									{
+										$answer->text .= $meal->size . " - " . $meal->name . " - " . $meal->price . PHP_EOL;
+									}
 								}
 							}
 							else
