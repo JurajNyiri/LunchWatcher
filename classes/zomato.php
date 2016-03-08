@@ -4,29 +4,49 @@ class Zomato {
 	private $saveLocation = "data/";
 	private $online = false;
 	private $path = "";
-    public function __construct($online = false,$path = "",$link)
+	private $config;
+    public function __construct($online = false,$path = "",$link,$config)
     {
     	$this->link = $link;
     	$this->saveLocation .= "zomato_" . md5($link);
     	$this->online = $online;
     	$this->path = $path;
+    	$this->config = $config;
     }
 
     private function processZomatoItem($str)
     {
     	$finalItemData = new stdClass();
-    	switch ($this->link) {
-		    case "https://www.zomato.com/sk/bratislava/beabout-star%C3%A9-mesto-bratislava-i/menu":
-		        $finalItemData = $this->processBeAboutItem($str);
+    	$foundTheRestaurant = false;
+    	foreach($this->config['zomato_supported'] as $name => $zomato_supported)
+		{
+			if(strtoupper($name) == "BEABOUT")
+			{
+				$foundTheRestaurant = true;
+				$finalItemData = $this->processBeAboutItem($str);
 		        break;
-		    default:
-		        $finalItemData->name = $str;
-		        $finalItemData->price = "";
-		        $finalItemData->size = "";
-		        $finalItemData->alergens = "";
+			}
+			else if(strtoupper($name) == "ANJOU")
+			{
+				$foundTheRestaurant = true;
+				$finalItemData = $this->processAnjouItem($str);
 		        break;
+			}
+		}
+		if(!$foundTheRestaurant)
+		{
+			$finalItemData->name = $str;
+	        $finalItemData->price = "";
+	        $finalItemData->size = "";
+	        $finalItemData->alergens = "";
 		}
 		return $finalItemData;
+    }
+
+    private function processAnjouItem($str)
+    {
+    	//todo
+    	return $str;
     }
 
     private function processBeAboutItem($str)

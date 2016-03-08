@@ -1,6 +1,6 @@
 <?php
 require "classes/zomato.php";
-$zomato = new Zomato(true,"","https://www.zomato.com/sk/bratislava/pulitzer-u-zlat%C3%A9ho-jele%C5%88a-star%C3%A9-mesto-bratislava-i/menu");
+$zomato = new Zomato(true,"","https://www.zomato.com/sk/bratislava/brasserie-anjou-star%C3%A9-mesto-bratislava-i/menu");
 
 $weekMeals = $zomato->getFood();
 print_r($weekMeals);
