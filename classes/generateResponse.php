@@ -33,6 +33,10 @@ class generateResponse {
             foreach ($entries as $node) {
             	$answer->text = $node->nodeValue;
             }
+            include "funny_animals.php";
+            $randomAnimal = rand(0,(count($funny_animals)-1));
+            $answer->username = $funny_animals[$randomAnimal]["name"];
+            $answer->icon_url = $funny_animals[$randomAnimal]["image"];
     	}
     	else if((count($this->arguments) > 1) && $this->arguments[0] == "!lunch")
 		{
