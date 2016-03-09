@@ -12,7 +12,29 @@ class generateResponse {
     {
     	$answer = new stdClass();
     	$config = $this->config;
-    	if(count($this->arguments) > 1)
+    	if($this->arguments[0] == "!joke" && $this->arguments[1] == "lamer")
+    	{
+    		$ch = curl_init();
+			$timeout = 10;
+			curl_setopt($ch, CURLOPT_URL, "http://www.lamer.cz/quote/random");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			$data = curl_exec($ch);
+			curl_close($ch);
+
+			$dom = new DOMDocument('1.0', 'utf-8');
+            @$dom->loadHTML($data);
+            $xpath = new DOMXPath($dom);
+
+            $query = "//div[@id='quotes']/div[@class='quote first']/p[@class='text']";
+			$answer->text = "";
+            $entries = $xpath->query($query);
+            
+            foreach ($entries as $node) {
+            	$answer->text = $node->nodeValue;
+            }
+    	}
+    	else if((count($this->arguments) > 1) && $this->arguments[0] == "!lunch")
 		{
 			if(strtoupper($this->arguments[1]) == "BEVANDA")
 			{
@@ -85,6 +107,7 @@ class generateResponse {
 		{
 			require $this->path."arguments/usage.php";
 		}
+    	
 		return $answer;
     }
 }
