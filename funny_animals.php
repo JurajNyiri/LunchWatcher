@@ -33,7 +33,7 @@ $funny_animals = array(
 		"image" => "http://funnyneel.com/manual/animal-happy/smiling-laughing-animals%20(14).jpg"
 		),
 	array(
-		"name" => "Judging owl",
+		"name" => "Judging Owl",
 		"image" => "http://funnyneel.com/manual/animal-happy/smiling-laughing-animals%20(15).jpg"
 		)
 	);
