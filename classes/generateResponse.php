@@ -12,31 +12,62 @@ class generateResponse {
     {
     	$answer = new stdClass();
     	$config = $this->config;
-    	if($this->arguments[0] == "!joke" && $this->arguments[1] == "lamer")
+    	if($this->arguments[0] == "!joke")
     	{
-    		$ch = curl_init();
-			$timeout = 10;
-			curl_setopt($ch, CURLOPT_URL, "http://www.lamer.cz/quote/random");
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-			$data = curl_exec($ch);
-			curl_close($ch);
+    		if($this->arguments[1] == "lamer")
+			{
+				$ch = curl_init();
+				$timeout = 10;
+				curl_setopt($ch, CURLOPT_URL, "http://www.lamer.cz/quote/random");
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+				$data = curl_exec($ch);
+				curl_close($ch);
 
-			$dom = new DOMDocument('1.0', 'utf-8');
-            @$dom->loadHTML($data);
-            $xpath = new DOMXPath($dom);
+				$dom = new DOMDocument('1.0', 'utf-8');
+	            @$dom->loadHTML($data);
+	            $xpath = new DOMXPath($dom);
 
-            $query = "//div[@id='quotes']/div[@class='quote first']/p[@class='text']";
-			$answer->text = "";
-            $entries = $xpath->query($query);
-            
-            foreach ($entries as $node) {
-            	$answer->text = $node->nodeValue;
-            }
-            include "funny_animals.php";
-            $randomAnimal = rand(0,(count($funny_animals)-1));
-            $answer->username = $funny_animals[$randomAnimal]["name"];
-            $answer->icon_url = $funny_animals[$randomAnimal]["image"];
+	            $query = "//div[@id='quotes']/div[@class='quote first']/p[@class='text']";
+				$answer->text = "";
+	            $entries = $xpath->query($query);
+	            
+	            foreach ($entries as $node) {
+	            	$answer->text = $node->nodeValue;
+	            }
+	            include "funny_animals.php";
+	            $randomAnimal = rand(0,(count($funny_animals)-1));
+	            $answer->username = $funny_animals[$randomAnimal]["name"];
+	            $answer->icon_url = $funny_animals[$randomAnimal]["image"];
+			}
+			else if($this->arguments[1] == "random")
+			{
+				$ch = curl_init();
+				$timeout = 10;
+				curl_setopt($ch, CURLOPT_URL, "http://www.srandy.sk/index.php/component/vtipy/random");
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+				$data = curl_exec($ch);
+				curl_close($ch);
+
+				$dom = new DOMDocument('1.0', 'utf-8');
+	            @$dom->loadHTML($data);
+	            $xpath = new DOMXPath($dom);
+
+	            $query = "//div[@id='obraz_stred']/div/table/tr[2]/td";
+				$answer->text = "";
+	            $entries = $xpath->query($query);
+	            foreach ($entries as $node) {
+	            	$answer->text = $node->nodeValue;
+	            }
+	            include "funny_animals.php";
+	            $randomAnimal = rand(0,(count($funny_animals)-1));
+	            $answer->username = $funny_animals[$randomAnimal]["name"];
+	            $answer->icon_url = $funny_animals[$randomAnimal]["image"];
+			}
+				///http://www.srandy.sk/index.php/component/vtipy/random
+    		//http://www.nejvtipy.cz/nahodne-vtipy_sk
+    		
     	}
     	else if((count($this->arguments) > 1) && $this->arguments[0] == "!lunch")
 		{
